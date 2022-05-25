@@ -10,8 +10,21 @@
     <title>Weather</title>
 </head>
 <body>
-    <p>Hello heroku</p>
-    <p id="location"></p>
+
+    <div class="container">
+
+        <div class="header flex">
+            <strong class="header__location" id="header-location"></strong>
+            <p class="header__temp" id="header-temp"></p>
+            <p class="header__condition" id="header-condition"></p>
+            <div class="min-max__wrapper flex">
+                <p>H:<span id="header-highest"></span>&deg;</p>
+                <p>L:<span id="header-lowest"></span>&deg;</p>
+            </div>
+        </div>
+
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>

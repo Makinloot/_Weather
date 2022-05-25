@@ -17,8 +17,20 @@ navigator.geolocation.getCurrentPosition(async position => {
     const res = await fetch('/api', options);
     const data = await res.json();
     console.log(data);
-    const body = document.body;
-    const loc = document.getElementById('location');
-    loc.textContent = data;
-    body.append(loc);
-})
+    headerData(data);
+});
+
+// pulls data from api for header
+function headerData(data) {
+    const location = data.location.name;
+    const temperature = data.current.temp_c;
+    const condition = data.current.condition.text;
+    const maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
+    const minTemp = data.forecast.forecastday[0].day.mintemp_c;
+
+    document.getElementById('header-location').textContent = location;
+    document.getElementById('header-temp').textContent = `${temperature}°`;
+    document.getElementById('header-condition').textContent = condition;
+    document.getElementById('header-highest').textContent = maxTemp;
+    document.getElementById('header-lowest').textContent = minTemp;
+}

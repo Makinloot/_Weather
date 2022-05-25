@@ -19,5 +19,5 @@ app.post('/api', async (request, response) => {
     const weather_res = await fetch(weather_url);
     const weather_data = await weather_res.json();
 
-    response.json(weather_data.location.name);
+    response.json(weather_data);
 })

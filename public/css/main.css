@@ -1,8 +1,51 @@
+:root {
+    --ff-primary: 'Metrophobic', sans-serif;
+
+    --clr-text: #fff;
+
+    --margin-medium: 2rem 0;
+    --margin-regular: .5rem 0;
+}
+
 body {
     min-height: 100vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--ff-primary);
+    color: var(--clr-text);
+}
+
+.flex {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    font-size: 10rem;
+}
+
+.container {
+    width: min(100%, 662px);
+    margin: 0 auto;
+}
+
+.header {
+    background-color: rgb(65, 65, 65);
+    margin: var(--margin-medium);
+}
+
+.header__location {
+    font-size: 1.5rem;
+}
+
+.header__temp {
+    margin: var(--margin-regular);
+    font-size: 2.5rem;
+}
+
+.min-max__wrapper {
+    flex-direction: row;
+    gap: .5rem;
 }
