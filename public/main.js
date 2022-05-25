@@ -18,5 +18,7 @@ navigator.geolocation.getCurrentPosition(async position => {
     const data = await res.json();
     console.log(data);
     const body = document.body;
-    body.append(document.createElement('p').textContent = data)
+    const loc = document.getElementById('location');
+    loc.textContent = data;
+    body.append(loc);
 })
