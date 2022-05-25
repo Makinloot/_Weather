@@ -8,7 +8,9 @@
 }
 
 body {
+    padding: 2rem .5rem;
     min-height: 100vh;
+    background-color: red;
 }
 
 * {
@@ -33,7 +35,6 @@ body {
 
 .header {
     background-color: rgb(65, 65, 65);
-    margin: var(--margin-medium);
 }
 
 .header__location {
@@ -48,4 +49,32 @@ body {
 .min-max__wrapper {
     flex-direction: row;
     gap: .5rem;
+}
+
+.slider {
+    margin: 2rem 0 .5rem;
+    min-height: 150px;
+    border-radius: 1rem;
+    background-color: rgb(65, 65, 65);
+}
+
+.forecast {
+    border-radius: 1rem;
+    background-color: rgb(65, 65, 65);
+}
+
+.forecast__row {
+    padding: .5rem 1rem;
+    display: grid;
+    grid-template-columns: 40% 1fr 33%;
+}
+
+/* .row_day {
+
+} */
+
+.min-max__row {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1rem;
 }

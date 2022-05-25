@@ -9,7 +9,6 @@ app.use(express.json({ limit: '1mb' }));
 require('dotenv').config();
 
 app.post('/api', async (request, response) => {
-    console.log('We got a request!');
     const API_KEY = process.env.API_KEY;
     const data = request.body;
     const lat = data.latitude;
