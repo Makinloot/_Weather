@@ -28,9 +28,12 @@ function headerData(data) {
     const condition = data.current.condition.text;
     const maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
     const minTemp = data.forecast.forecastday[0].day.mintemp_c;
+    const degreeSpan = document.createElement('span');
+
+    degreeSpan.innerText = '°';
 
     document.getElementById('header-location').textContent = location;
-    document.getElementById('header-temp').textContent = `${temperature}°`;
+    document.getElementById('header-temp').append(temperature, degreeSpan)
     document.getElementById('header-condition').textContent = condition;
     document.getElementById('header-highest').textContent = maxTemp;
     document.getElementById('header-lowest').textContent = minTemp;
@@ -53,8 +56,8 @@ function forecastData(data) {
         const root = document.createElement('div');
         root.classList.add('forecast__row');
         root.innerHTML = `
-            <p class='row_day'>${currDay}</p>
-            <img src=${iconPath} alt='condition img' width='32px' height='32px'>
+            <p class='row__day'>${currDay}</p>
+            <img class='row__icon' src=${iconPath} alt='condition img'>
             <div class='min-max__row flex'>
                 <p>H:${maxPath}°</p>
                 <p>H:${minPath}°</p>
