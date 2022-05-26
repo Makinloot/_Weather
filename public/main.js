@@ -55,7 +55,7 @@ function hourlyData(data) {
         root.innerHTML = `
             <p>${time}</p>
             <img class='hourly__icon' src=${hourlyCondition} alt='weather condition'>
-            <strong class='hourly__temp'>${hourlyTemp}°</strong>
+            <strong class='hourly__temp'>${hourlyTemp}<span class='hourly__degree'>°</span></strong>
         `;
         slider.append(root);
     })
@@ -157,8 +157,8 @@ function forecastData(data) {
             <p class='row__day'>${currDay}</p>
             <img class='row__icon' src=${iconPath} alt='condition img'>
             <div class='min-max__row flex'>
-                <p>H:${maxPath}°</p>
-                <p>H:${minPath}°</p>
+                <p class='row__max-temp'><span>H:</span>${maxPath}°</p>
+                <p class='row__min-temp'><span>H:</span>${minPath}°</p>
             </div>
         `
         forecastWrapper.append(root);
