@@ -7,7 +7,28 @@
         transform: translate(-50%, -50%);
     }
 
+    .wrapper {
+        position: relative;
+        max-height: 500px;
+        padding: 1rem;
+        border: 1px solid;
+        border-radius: 1rem;
+        box-shadow: 5px 5px 15px 4px rgba(0, 0, 0, 0.14);
+        overflow: auto;
+    }
+
     .forecast {
+        flex-direction: row;
+    }
+    .forecast__wrapper {
+        width: 50%;
+    }
+    .box__wrapper {
+        display: flex;
+        gap: .5rem;
+        width: 48%;
+    }
+    .box {
         width: 50%;
     }
 }

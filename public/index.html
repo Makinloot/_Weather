@@ -14,22 +14,49 @@
 
     <div class="container">
 
-        <div class="header flex">
-            <strong class="header__location" id="header-location"></strong>
-            <p class="header__temp" id="header-temp"></p>
-            <p class="header__condition" id="header-condition"></p>
-            <div class="min-max__wrapper flex">
-                <p>H:<span id="header-highest"></span>&deg;</p>
-                <p>L:<span id="header-lowest"></span>&deg;</p>
+        <div class="wrapper">
+
+            <div class="header flex">
+                <strong class="header__location" id="header-location"></strong>
+                <p class="header__temp" id="header-temp"></p>
+                <p class="header__condition" id="header-condition"></p>
+                <div class="min-max__wrapper flex">
+                    <p>H:<span id="header-highest"></span>&deg;</p>
+                    <p>L:<span id="header-lowest"></span>&deg;</p>
+                </div>
             </div>
-        </div>
 
-        <div class="slider" id="slider">
-            <div class="row__wrapper" id="slider-item"></div>
-        </div>
+            <div class="slider block" id="slider">
+                <div class="row__wrapper" id="slider-item"></div>
+            </div>
 
-        <div class="forecast">
-            <div class="forecast__wrapper" id="forecast-wrapper"></div>
+            <div class="forecast block flex">
+                <div class="forecast__wrapper flex" id="forecast-wrapper"></div>
+                <div class="box__wrapper">
+                    <div class="sunrise box" id="sunrise-wrapper">
+                        <div class="sunrise__current">
+                            <p id="current-astro-text"></p>
+                            <!-- <img id="current-astro-icon" src="#" alt="#"> -->
+                        </div>
+                        <div class="sunrise__display">
+                        </div>
+                        <div class="sunrise__past">
+                            <p id="past-astro-text"></p>
+                            <!-- <img id="past-astro-icon" src="#" alt="#"> -->
+                        </div>
+                    </div>
+                    <div class="feelslike box" id="feelslike-wrapper">
+                        <div class="feelslike__details">
+                            <!-- <img id="feelslike-icon" src="#" alt="#"> -->
+                            <!-- <p id="feelslike-temperature"><span class='feelslike__degree'>&deg;</span></p> -->
+                        </div>
+                        <div class="feelslike__condition">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>

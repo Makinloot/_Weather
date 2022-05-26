@@ -20,6 +20,9 @@ navigator.geolocation.getCurrentPosition(async position => {
     headerData(data);
     hourlyData(data);
     forecastData(data);
+    fetchDetails(data);
+
+    hourlyDataSlider();
 });
 
 // pulls data from api for header
@@ -61,69 +64,78 @@ function hourlyData(data) {
     })
 }
 
+// slider for hourly data
+function hourlyDataSlider() {
+    const slider = document.getElementById('slider');
+    const sliderItem = document.getElementById('slider-item');
+    let isDown = false;
+    let startX;
+    let x;
+    
+    window.addEventListener('mouseup', () => {
+        isDown = false;
+    })
+    
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.offsetX - sliderItem.offsetLeft;
+        slider.style.cursor = 'grabbing';
+    });
+    
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+    
+    slider.addEventListener('mouseenter', () => {
+        slider.style.cursor = 'grab';
+    })
+    
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+    });
+    
+    slider.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        x = e.offsetX;
+    
+        sliderItem.style.left = `${x - startX}px`;
+        boundary();
+    });
+    
+    slider.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.targetTouches[0].clientX - sliderItem.offsetLeft;
+    }, {passive: true});
+    
+    slider.addEventListener('touchmove', (e) => {
+        if(!isDown) return;
+        x = e.targetTouches[0].clientX;
+    
+        sliderItem.style.left = `${x - startX}px`
+        boundary();
+    }, {passive: true});
 
-
-
-const slider = document.getElementById('slider');
-const sliderItem = document.getElementById('slider-item');
-let isDown = false;
-let startX;
-let x;
-
-window.addEventListener('mouseup', () => {
-    isDown = false;
-})
-
-slider.addEventListener('mousedown', (e) => {
-    isDown = true;
-    startX = e.offsetX - sliderItem.offsetLeft;
-    slider.style.cursor = 'grabbing';
-});
-
-slider.addEventListener('mouseup', () => {
-    isDown = false;
-    slider.style.cursor = 'grab';
-});
-
-slider.addEventListener('mouseenter', () => {
-    slider.style.cursor = 'grab';
-})
-
-slider.addEventListener('mouseleave', () => {
-    isDown = false;
-});
-
-slider.addEventListener('mousemove', (e) => {
-    if(!isDown) return;
-    e.preventDefault();
-    x = e.offsetX;
-
-    sliderItem.style.left = `${x - startX}px`;
-    boundary();
-});
-
-slider.addEventListener('touchstart', (e) => {
-    isDown = true;
-    startX = e.targetTouches[0].clientX - sliderItem.offsetLeft;
-}, {passive: true});
-
-slider.addEventListener('touchmove', (e) => {
-    if(!isDown) return;
-    x = e.targetTouches[0].clientX;
-
-    sliderItem.style.left = `${x - startX}px`
-    boundary();
-}, {passive: true});
-
-function boundary() {
-    let outer = slider.getBoundingClientRect();
-    let inner = sliderItem.getBoundingClientRect();
-
-    if(parseInt(sliderItem.style.left) > 0) {
-        sliderItem.style.left = '0px';
-    } else if(inner.right < outer.right) {
-        sliderItem.style.left = `-${inner.width - outer.width}px`;
+    function boundary() {
+        let outer = slider.getBoundingClientRect();
+        let inner = sliderItem.getBoundingClientRect();
+    
+        if(parseInt(sliderItem.style.left) > 0) {
+            sliderItem.style.left = '0px';
+        } else if(inner.right < outer.right) {
+            sliderItem.style.left = `-${inner.width - outer.width}px`;
+        }
     }
+}
+
+function fetchDetails(data) {
+    const wrapper = document.getElementById('sunrise-wrapper');
+    const astroPath = data.forecast.forecastday[0].astro;
+    const sunrise = astroPath.sunrise;
+    const sunset = astroPath.sunset;
+
+    
 }
 
 
