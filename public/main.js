@@ -43,9 +43,6 @@ function headerData(data) {
 // pulls data from api and displays it in slider
 function hourlyData(data) {
     const path = data.forecast.forecastday[0].hour;
-    // const time = path.time;
-    // const hourlyCondition = path.condition.icon;
-    // const hourlyTemp = path.temp_c;
 
     path.forEach( item => {
         const slider = document.getElementById('slider-item');
@@ -58,7 +55,7 @@ function hourlyData(data) {
         root.innerHTML = `
             <p>${time}</p>
             <img class='hourly__icon' src=${hourlyCondition} alt='weather condition'>
-            <strong>${hourlyTemp}</strong>
+            <strong class='hourly__temp'>${hourlyTemp}°</strong>
         `;
         slider.append(root);
     })
@@ -74,12 +71,12 @@ let startX;
 let x;
 
 window.addEventListener('mouseup', () => {
-    pressed = false;
+    isDown = false;
 })
 
 slider.addEventListener('mousedown', (e) => {
     isDown = true;
-    startX = e.pageX - sliderItem.offsetLeft;
+    startX = e.offsetX - sliderItem.offsetLeft;
     slider.style.cursor = 'grabbing';
 });
 

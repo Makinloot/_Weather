@@ -1,5 +1,5 @@
 :root {
-    --ff-primary: 'Metrophobic', sans-serif;
+    --ff-primary: 'roboto', sans-serif;
 
     --clr-text: #fff;
 
@@ -8,6 +8,7 @@
 }
 
 body {
+    position: relative;
     padding: 2rem .5rem;
     min-height: 100vh;
     background-color: rgb(110, 92, 92);
@@ -29,13 +30,15 @@ body {
 }
 
 .container {
-    width: min(100%, 662px);
+    width: min(100%, 480px);
     margin: 0 auto;
 }
 
 .header {
-    background-color: rgb(65, 65, 65);
     margin: 0 0 2rem;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 1.15px;
 }
 
 .header__location {
@@ -51,20 +54,33 @@ body {
 .header__temp span {
     font-size: 2rem;
     position: absolute;
-    right: -1rem;
+    right: -.6rem;
     top: .2rem;
 }
 
 .min-max__wrapper {
-    font-size: 80%;
     flex-direction: row;
     gap: .5rem;
+    font-size: 80%;
+    font-weight: 600;
 }
 
 .forecast {
+    position: relative;
+    min-height: 120px;
     margin: .5rem 0 0;
     border-radius: 1rem;
     background-color: rgb(65, 65, 65);
+    pointer-events: none;
+    user-select: none;
+}
+
+.forecast__wrapper {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .forecast__row {
@@ -102,7 +118,7 @@ body {
 }
 
 .row__wrapper {
-    width: 400%;
+    width: 350%;
     height: 100%;
     position: absolute;
     top: 50%;
@@ -111,10 +127,8 @@ body {
     display: grid;
     grid-template-columns: repeat(24, 4.15%);
     place-items: center;
-    /* gap: 1rem; */
     pointer-events: none;
     user-select: none;
-    /* z-index: -1; */
 }
 
 .slider__item {

@@ -1,19 +1,9 @@
 @font-face {
-    font-family: 'montserrat';
-    src: url('../fonts/Montserrat-Medium.woff2') format('woff2'),
-        url('../fonts/Montserrat-Medium.woff') format('woff'),
-        url('../fonts/Montserrat-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'metrophobic';
-    src:url('../fonts/Metrophobic-Regular.woff2') format('woff2'),
-        url('../fonts/Metrophobic-Regular.woff') format('woff'),
-       url('../fonts/Metrophobic-Regular.ttf') format('truetype');
-    font-weight: normal;
+    font-family: 'roboto';
+    src: url('../fonts/Roboto-Light.woff2') format('woff2'),
+        url('../fonts/Roboto-Light.woff') format('woff'),
+        url('../fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
