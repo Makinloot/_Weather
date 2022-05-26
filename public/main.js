@@ -18,6 +18,7 @@ navigator.geolocation.getCurrentPosition(async position => {
     const data = await res.json();
     console.log(data);
     headerData(data);
+    hourlyData(data);
     forecastData(data);
 });
 
@@ -38,6 +39,106 @@ function headerData(data) {
     document.getElementById('header-highest').textContent = maxTemp;
     document.getElementById('header-lowest').textContent = minTemp;
 }
+
+// pulls data from api and displays it in slider
+function hourlyData(data) {
+    const path = data.forecast.forecastday[0].hour;
+    // const time = path.time;
+    // const hourlyCondition = path.condition.icon;
+    // const hourlyTemp = path.temp_c;
+
+    path.forEach( item => {
+        const slider = document.getElementById('slider-item');
+        const time = item.time.split(' ')[1].split(':')[0];
+        const hourlyCondition = item.condition.icon;
+        const hourlyTemp = Math.floor(item.temp_c);
+        
+        const root = document.createElement('div');
+        root.classList.add('slider__item', 'flex');
+        root.innerHTML = `
+            <p>${time}</p>
+            <img class='hourly__icon' src=${hourlyCondition} alt='weather condition'>
+            <strong>${hourlyTemp}</strong>
+        `;
+        slider.append(root);
+    })
+}
+
+
+
+
+const slider = document.getElementById('slider');
+const sliderItem = document.getElementById('slider-item');
+let isDown = false;
+let startX;
+let x;
+
+window.addEventListener('mouseup', () => {
+    pressed = false;
+})
+
+slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - sliderItem.offsetLeft;
+    slider.style.cursor = 'grabbing';
+});
+
+slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.style.cursor = 'grab';
+});
+
+slider.addEventListener('mouseenter', () => {
+    slider.style.cursor = 'grab';
+})
+
+slider.addEventListener('mouseleave', () => {
+    isDown = false;
+});
+
+slider.addEventListener('mousemove', (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    x = e.offsetX;
+
+    sliderItem.style.left = `${x - startX}px`;
+    boundary();
+});
+
+slider.addEventListener('touchstart', (e) => {
+    isDown = true;
+    startX = e.targetTouches[0].clientX - sliderItem.offsetLeft;
+}, {passive: true});
+
+slider.addEventListener('touchmove', (e) => {
+    if(!isDown) return;
+    x = e.targetTouches[0].clientX;
+
+    sliderItem.style.left = `${x - startX}px`
+    boundary();
+}, {passive: true});
+
+function boundary() {
+    let outer = slider.getBoundingClientRect();
+    let inner = sliderItem.getBoundingClientRect();
+
+    if(parseInt(sliderItem.style.left) > 0) {
+        sliderItem.style.left = '0px';
+    } else if(inner.right < outer.right) {
+        sliderItem.style.left = `-${inner.width - outer.width}px`;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // pulls data from api for 3 day forecast
 function forecastData(data) {
