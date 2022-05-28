@@ -13,6 +13,7 @@ app.post("/api", async (request, response) => {
   const data = request.body;
   const lat = data.latitude;
   const lon = data.longitude;
+  console.log(lat, lon)
   const weather_url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=10`;
   const weather_res = await fetch(weather_url);
   const weather_data = await weather_res.json();
@@ -23,4 +24,4 @@ app.post("/api", async (request, response) => {
 app.post('/map', async (request, response) => {
   const mapKey = process.env.MAP_TOKEN;
   response.json(mapKey);
-})
+});

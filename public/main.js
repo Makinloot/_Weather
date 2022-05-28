@@ -1,8 +1,14 @@
 import "./lib/leaflet.js";
 
-navigator.geolocation.getCurrentPosition(async (position) => {
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
+fetchApi();
+
+async function fetchApi() {
+  const ip_res = await fetch('https://api.ipgeolocation.io/ipgeo?apiKey=34e7945b77584086be86dcee92f7cab4');
+  const ip_data = await ip_res.json();
+  console.log(ip_data);
+
+  const lat = ip_data.latitude;
+  const lon = ip_data.longitude;
 
   const locationData = {
     latitude: lat,
@@ -24,7 +30,33 @@ navigator.geolocation.getCurrentPosition(async (position) => {
   forecastData(data);
   fetchAstro(data);
   getMapToken(lat, lon);
-});
+}
+
+// navigator.geolocation.getCurrentPosition(async (position) => {
+//   const lat = position.coords.latitude;
+//   const lon = position.coords.longitude;
+
+//   const locationData = {
+//     latitude: lat,
+//     longitude: lon,
+//   };
+//   const options = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(locationData),
+//   };
+
+//   const res = await fetch("/api", options);
+//   const data = await res.json();
+//   console.log(data);
+//   headerData(data);
+//   hourlyData(data);
+//   forecastData(data);
+//   fetchAstro(data);
+//   getMapToken(lat, lon);
+// });
 
 // pulls data from api for header
 function headerData(data) {
