@@ -34,10 +34,6 @@ body {
   margin: 0 auto;
 }
 
-.wrapper {
-  /* overflow: hidden; */
-}
-
 .block {
   position: relative;
   min-height: 120px;
@@ -59,15 +55,14 @@ body {
 
 .header__temp {
   position: relative;
-  margin: -0.5rem;
-  font-size: 3rem;
+  font-size: 4rem;
 }
 
 .header__temp span {
-  font-size: 2rem;
+  font-size: 3rem;
   position: absolute;
-  right: -0.6rem;
-  top: 0.2rem;
+  right: -0.8rem;
+  top: -.3rem;
 }
 
 .min-max__wrapper {
@@ -188,7 +183,8 @@ body {
 
 .sunrise__current div,
 .sunrise__past div,
-.feelslike__details {
+.feelslike__details,
+.wind-speed {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
@@ -196,9 +192,11 @@ body {
   gap: 0.3rem;
   font-size: 80%;
   opacity: 0.5;
+  text-transform: uppercase;
 }
 
-.sunrise__past div {
+.sunrise__past div,
+.wind-speed {
   top: 6rem;
   left: 0.5rem;
   opacity: 1;
@@ -208,3 +206,15 @@ body {
   font-size: 5rem;
   bottom: 5rem;
 }
+
+.map__wrapper {
+  margin: .5rem 0;
+  padding: .8rem;
+  border-radius: 1rem;
+  background-color: rgb(65, 65, 65);
+}
+
+#map { 
+  height: 200px;
+  border-radius: .5rem;
+ }

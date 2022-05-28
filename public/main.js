@@ -1,3 +1,5 @@
+import "./lib/leaflet.js";
+
 navigator.geolocation.getCurrentPosition(async (position) => {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
@@ -21,6 +23,7 @@ navigator.geolocation.getCurrentPosition(async (position) => {
   hourlyData(data);
   forecastData(data);
   fetchAstro(data);
+  getMapToken(lat, lon);
 });
 
 // pulls data from api for header
@@ -91,6 +94,9 @@ function fetchAstro(data) {
   document.getElementById(
     "feels-like-temp"
   ).textContent = `${data.current.feelslike_c}°`;
+  document.getElementById(
+    "wind-speed"
+  ).textContent = `${data.current.wind_kph}`;
 }
 
 // pulls data from api for 3 day forecast
@@ -119,4 +125,41 @@ function forecastData(data) {
         `;
     forecastWrapper.append(root);
   }
+}
+
+async function getMapToken(lat, lon) {
+  const request = {
+    map: "token",
+  };
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(request),
+  };
+  const res = await fetch("/map", options);
+  const map_data = await res.json();
+  displayMap(map_data, lat, lon);
+}
+
+function displayMap(data, lat, lon) {
+  let map = L.map("map").setView([lat, lon], 12);
+  let Jawg_Terrain = L.tileLayer(
+    "https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}",
+    {
+      attribution:
+        '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      minZoom: 0,
+      maxZoom: 22,
+      subdomains: "abcd",
+      accessToken: data,
+    }
+  ).addTo(map);
+  let marker = L.marker([lat, lon], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+  }).addTo(map);
 }

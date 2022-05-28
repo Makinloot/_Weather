@@ -9,6 +9,7 @@
     />
     <link rel="shortcut icon" href="images/icon.png" type="image/x-icon" />
     <link rel="stylesheet" href="css/font.css" />
+    <link rel="stylesheet" href="./lib/leaflet.css">
     <link
       rel="stylesheet"
       href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
@@ -65,19 +66,24 @@
                 />
                 <p id="feelslike-temperature">FEELS LIKE</p>
               </div>
-              <div class="feelslike__temp">
-                <p></p>
+              <div class="wind-speed">
+                  <p>Wind <span  id="wind-speed"></span> k/ph</p>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="map__wrapper">
+          <div id="map"></div>
+        </div>
+
       </div>
     </div>
 
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script>
-      var swiper = new Swiper(".mySwiper", {
+      let swiper = new Swiper(".mySwiper", {
         slidesPerView: 6.5,
         spaceBetween: 0,
         freeMode: true,

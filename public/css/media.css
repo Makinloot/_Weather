@@ -20,15 +20,22 @@
   .forecast {
     flex-direction: row;
   }
+
   .forecast__wrapper {
     width: 50%;
   }
+
   .box__wrapper {
     display: flex;
     gap: 0.5rem;
     width: 48%;
   }
+
   .box {
     width: 50%;
+  }
+
+  .map__wrapper {
+    width: 75%;
   }
 }

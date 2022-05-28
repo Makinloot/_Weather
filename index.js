@@ -19,3 +19,8 @@ app.post("/api", async (request, response) => {
 
   response.json(weather_data);
 });
+
+app.post('/map', async (request, response) => {
+  const mapKey = process.env.MAP_TOKEN;
+  response.json(mapKey);
+})
