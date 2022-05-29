@@ -218,3 +218,12 @@ body {
   height: 200px;
   border-radius: .5rem;
  }
+
+ /* .leaflet-control-container {
+   display: none;
+ } */
+
+ .leaflet-top,
+ .leaflet-bottom {
+   display: none;
+ }

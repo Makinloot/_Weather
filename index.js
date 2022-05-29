@@ -8,6 +8,7 @@ app.use(express.static("public"));
 app.use(express.json({ limit: "1mb" }));
 require("dotenv").config();
 
+// sending weather data to user
 app.post("/api", async (request, response) => {
   const API_KEY = process.env.API_KEY;
   const data = request.body;
@@ -20,6 +21,7 @@ app.post("/api", async (request, response) => {
   response.json(weather_data);
 });
 
+// sending api and map keys
 app.post("/token", async (request, response) => {
   const mapKey = process.env.MAP_TOKEN;
   const IP_KEY = process.env.IP_KEY;

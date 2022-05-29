@@ -152,7 +152,7 @@ function forecastData(data) {
 }
 // Creates and displays map on page with swiper.js library
 function displayMap(key, lat, lon) {
-  let map = L.map("map").setView([lat, lon], 12); // create map
+  let map = L.map("map").setView([lat, lon], 10); // create map
   // map terrain
   let Jawg_Terrain = L.tileLayer(
     "https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}",
@@ -163,13 +163,14 @@ function displayMap(key, lat, lon) {
       maxZoom: 22,
       subdomains: "abcd",
       accessToken: key,
+      zoomControl: false
     }
   ).addTo(map);
-  // map marker
-  let marker = L.marker([lat, lon], {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5,
-    radius: 500
-  }).addTo(map);
+  // // map marker
+  // let marker = L.marker([lat, lon], {
+  //   color: 'red',
+  //   fillColor: '#f03',
+  //   fillOpacity: 0.5,
+  //   radius: 500
+  // }).addTo(map);
 }
