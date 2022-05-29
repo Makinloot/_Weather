@@ -1,15 +1,31 @@
 import "./lib/leaflet.js";
-
 fetchApi();
 
 async function fetchApi() {
-  const ip_res = await fetch('https://api.ipgeolocation.io/ipgeo?apiKey=34e7945b77584086be86dcee92f7cab4');
-  const ip_data = await ip_res.json();
-  console.log(ip_data);
+  // Making request for API key and MAP key
+  const tokens = {
+    request: 'Send tokens'
+  }
+  const token_options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(tokens)
+  }
+  // fetching data for IP and MAP keys
+  const token_res = await fetch('./token', token_options);
+  const token_data = await token_res.json();
+  const IP_KEY = token_data.ip_token;
+  const MAP_KEY = token_data.map_token;
 
+  // fetching data for IP API
+  const ip_res = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${IP_KEY}`);
+  const ip_data = await ip_res.json();
   const lat = ip_data.latitude;
   const lon = ip_data.longitude;
 
+  // sending data (latitude, longitude) to server to make API call with users lat, lon.
   const locationData = {
     latitude: lat,
     longitude: lon,
@@ -21,7 +37,7 @@ async function fetchApi() {
     },
     body: JSON.stringify(locationData),
   };
-
+  // fetching data of weather API from server
   const res = await fetch("/api", options);
   const data = await res.json();
   console.log(data);
@@ -29,36 +45,10 @@ async function fetchApi() {
   hourlyData(data);
   forecastData(data);
   fetchAstro(data);
-  getMapToken(lat, lon);
+  displayMap(MAP_KEY, lat, lon);
 }
 
-// navigator.geolocation.getCurrentPosition(async (position) => {
-//   const lat = position.coords.latitude;
-//   const lon = position.coords.longitude;
-
-//   const locationData = {
-//     latitude: lat,
-//     longitude: lon,
-//   };
-//   const options = {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(locationData),
-//   };
-
-//   const res = await fetch("/api", options);
-//   const data = await res.json();
-//   console.log(data);
-//   headerData(data);
-//   hourlyData(data);
-//   forecastData(data);
-//   fetchAstro(data);
-//   getMapToken(lat, lon);
-// });
-
-// pulls data from api for header
+// displays data from api for header
 function headerData(data) {
   const location = data.location.name;
   const temperature = data.current.temp_c;
@@ -80,6 +70,7 @@ function headerData(data) {
 function hourlyData(data) {
   const path = data.forecast.forecastday[0].hour;
 
+  // making slider items in HTML format and putting them in slider-item wrapper
   path.forEach((item) => {
     const slider = document.getElementById("slider-item");
     const time = item.time.split(" ")[1].split(":")[0];
@@ -87,7 +78,6 @@ function hourlyData(data) {
     const hourlyTemp = Math.floor(item.temp_c);
 
     const root = document.createElement("div");
-    // root.classList.add('slider__item', 'flex');
     root.classList.add("swiper-slide", "flex");
     root.innerHTML = `
             <p>${time}</p>
@@ -98,6 +88,7 @@ function hourlyData(data) {
   });
 }
 
+// displays astro data from API
 function fetchAstro(data) {
   const currentAstro = document.getElementById("current-astro-text");
   const currentAstroIcon = document.getElementById("current-astro-icon");
@@ -109,6 +100,7 @@ function fetchAstro(data) {
   const sunset = astroPath.sunset;
   let time = new Date().getHours();
 
+  // determines to display SUNRISE or SUNSET first, depending on time of the day.
   if (time >= sunrise.split(":")[0]) {
     currentAstro.textContent = sunset;
     pastAstro.textContent = sunrise;
@@ -123,6 +115,7 @@ function fetchAstro(data) {
     currentAstroIcon.setAttribute("src", "../images/sunrise.png");
   }
 
+  // displays data for 'FEELS LIKE' temperature and wind speed.
   document.getElementById(
     "feels-like-temp"
   ).textContent = `${data.current.feelslike_c}°`;
@@ -134,9 +127,8 @@ function fetchAstro(data) {
 // pulls data from api for 3 day forecast
 function forecastData(data) {
   const forecastWrapper = document.getElementById("forecast-wrapper");
-  forecastWrapper.innerHTML = "";
-
   let forecastPath = data.forecast.forecastday;
+  // loops through forecast data array and craetes: Hour, Icon, Temperature in HTML format, then appends it in forecast wrapper.
   for (let i = 0; i < forecastPath.length; i++) {
     let iconPath = forecastPath[i].day.condition.icon;
     let minPath = Math.floor(forecastPath[i].day.mintemp_c);
@@ -158,25 +150,10 @@ function forecastData(data) {
     forecastWrapper.append(root);
   }
 }
-
-async function getMapToken(lat, lon) {
-  const request = {
-    map: "token",
-  };
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(request),
-  };
-  const res = await fetch("/map", options);
-  const map_data = await res.json();
-  displayMap(map_data, lat, lon);
-}
-
-function displayMap(data, lat, lon) {
-  let map = L.map("map").setView([lat, lon], 12);
+// Creates and displays map on page with swiper.js library
+function displayMap(key, lat, lon) {
+  let map = L.map("map").setView([lat, lon], 12); // create map
+  // map terrain
   let Jawg_Terrain = L.tileLayer(
     "https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}",
     {
@@ -185,9 +162,10 @@ function displayMap(data, lat, lon) {
       minZoom: 0,
       maxZoom: 22,
       subdomains: "abcd",
-      accessToken: data,
+      accessToken: key,
     }
   ).addTo(map);
+  // map marker
   let marker = L.marker([lat, lon], {
     color: 'red',
     fillColor: '#f03',

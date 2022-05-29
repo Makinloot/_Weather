@@ -34,8 +34,14 @@
   .box {
     width: 50%;
   }
+  
+  #map { 
+    height: 240px;
+    border-radius: .5rem;
+   }
 
   .map__wrapper {
     width: 75%;
   }
+
 }
