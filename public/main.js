@@ -24,7 +24,6 @@ async function fetchApi() {
   const ip_data = await ip_res.json();
   const lat = ip_data.latitude;
   const lon = ip_data.longitude;
-
   // sending data (latitude, longitude) to server to make API call with users lat, lon.
   const locationData = {
     latitude: lat,
@@ -49,6 +48,7 @@ async function fetchApi() {
   displayMap(MAP_KEY, lat, lon);
   progressBar(data);
   rainData(data);
+  changeBackground(data);
 }
 
 // displays data from api for header
@@ -210,4 +210,52 @@ function rainData(data) {
 
   rainText.textContent = `${chanceOfRain}%`
   snowText.textContent = `: ${chanceOfSnow}%`
+}
+
+// change background image of wrapper according to weather condition
+function changeBackground(data) {
+  const wrapper = document.getElementById('wrapper');
+  let conditionDay = data.current.condition.icon.split('/')[5];
+  // let conditionDay = 'day';
+  let condition = data.current.condition.icon.split('/')[6].split('.')[0];
+  // let condition = 113;
+  console.log(conditionDay)
+
+  if(condition === 113) {
+    // background image sunny
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/sunny.jpg)';
+    } else {
+      wrapper.style.background = 'url(./images/night/clear.jpg)';
+    }
+  } else if (condition >= 113 || condition <= 122) {
+    // CLOUDY CONDITIONS
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/cloudy.jpg)';
+    } else {
+      wrapper.style.background = 'url(./images/night/cloudy.jpg)';
+    }
+  } else if (conditionDay === 'day' && condition === 143) {
+    // background image mist
+  } else if (conditionDay === 'day' && condition === 176 || condition >= 293 || condition <= 302 || condition === 311 || condition === 353 || condition === 185 || condition >= 263 || condition <= 284 || condition === 317 || condition === 320) {
+    // background image light/medium rain
+  } else if(conditionDay === 'day' && condition >= 305 || condition <= 308 || condition === 314 || condition === 356 || condition === 359 || condition === 182) {
+    // background image heavy rain
+  } else if(conditionDay === 'day' && condition === 386 || condition === 389) {
+    // background image rain with thunder
+  } else if(conditionDay === 'day' && condition === 200) {
+    // thundery outbreak image
+  } else if(conditionDay === 'day' && condition === 179 || condition >= 323 || condition <= 329 || condition >= 362 || condition <= 368 || condition === 392) {
+    // light snow
+  } else if(conditionDay === 'day' && condition === 227 || condition === 230 || condition >= 332 || condition <= 338 || condition === 371 || condition === 395) {
+    // heavy snow
+  } else if(conditionDay === 'day' && condition === 248 || condition === 260) {
+    // fog
+  } else if(conditionDay === 'day' && condition === 350 || condition === 374 || condition === 377) {
+    // ice palletes
+  }
+
+  wrapper.style.backgroundPosition = 'center';
+  wrapper.style.backgroundRepeat = 'no-repeat';
+  wrapper.style.backgroundSize = 'cover';
 }
