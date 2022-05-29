@@ -1,5 +1,11 @@
 :root {
+  --avarage-height: 120px;
+
   --ff-primary: "roboto", sans-serif;
+
+  --bg-transparent: rgba(19, 15, 15, 0.356);
+  --bg-border: 1px solid rgba(138, 138, 138, 0.247);
+  --round-border: 1rem;
 
   --clr-text: #fff;
 
@@ -10,7 +16,7 @@
 body {
   position: relative;
   min-height: 100vh;
-  background-color: rgb(110, 92, 92);
+  background-image: linear-gradient(rgb(39, 36, 36), rgb(56, 58, 56));
 }
 
 * {
@@ -38,12 +44,6 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.block {
-  position: relative;
-  min-height: 120px;
-  border-radius: 1rem;
 }
 
 /* HEADER INFO */
@@ -82,8 +82,9 @@ body {
 
 .swiper {
   width: 100%;
-  border-radius: 1rem;
-  background-color: rgb(65, 65, 65);
+  border-radius: var(--round-border);
+  background-color: var(--bg-transparent);
+  border: var(--bg-border);
 }
 
 .swiper-wrapper {
@@ -118,6 +119,7 @@ body {
 }
 
 .forecast {
+  position: relative;
   gap: 0.5rem;
   margin: 0.5rem 0 0;
   pointer-events: none;
@@ -126,10 +128,11 @@ body {
 
 .forecast__wrapper {
   align-items: initial;
-  min-height: 120px;
+  min-height: var(--avarage-height);
   width: 100%;
-  background-color: rgb(65, 65, 65);
-  border-radius: 1rem;
+  background-color: var(--bg-transparent);
+  border: var(--bg-border);
+  border-radius: var(--round-border);
 }
 
 .forecast__row {
@@ -174,10 +177,11 @@ body {
 
 .box {
   position: relative;
-  height: 120px;
+  min-height: var(--avarage-height);
   width: 50%;
-  border-radius: 1rem;
-  background-color: rgb(65, 65, 65);
+  border-radius: var(--round-border);
+  background-color: var(--bg-transparent);
+  border: var(--bg-border);
 }
 
 #current-astro-text,
@@ -217,7 +221,8 @@ body {
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: rgb(80, 80, 80);
+  background-color: var(--bg-transparent);
+  border: var(--bg-border);
 }
 
 .progress__bar {
@@ -242,8 +247,9 @@ body {
 .map__wrapper {
   margin: .5rem 0;
   padding: .8rem;
-  border-radius: 1rem;
-  background-color: rgb(65, 65, 65);
+  border-radius: var(--round-border);
+  background-color: var(--bg-transparent);
+  border: var(--bg-border);
 }
 
 #map { 

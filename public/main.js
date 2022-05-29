@@ -216,46 +216,79 @@ function rainData(data) {
 function changeBackground(data) {
   const wrapper = document.getElementById('wrapper');
   let conditionDay = data.current.condition.icon.split('/')[5];
-  // let conditionDay = 'day';
   let condition = data.current.condition.icon.split('/')[6].split('.')[0];
-  // let condition = 113;
-  console.log(conditionDay)
 
-  if(condition === 113) {
+  console.log(condition);
+  if(condition == 113) {
     // background image sunny
     if(conditionDay === 'day') {
       wrapper.style.background = 'url(./images/day/sunny.jpg)';
     } else {
       wrapper.style.background = 'url(./images/night/clear.jpg)';
     }
-  } else if (condition >= 113 || condition <= 122) {
+  } else if (condition >= 116 && condition <= 122) {
     // CLOUDY CONDITIONS
+    console.log('HEHE')
     if(conditionDay === 'day') {
       wrapper.style.background = 'url(./images/day/cloudy.jpg)';
     } else {
       wrapper.style.background = 'url(./images/night/cloudy.jpg)';
     }
-  } else if (conditionDay === 'day' && condition === 143) {
+  } else if (condition == 143 || condition == 248 || condition == 260) {
     // background image mist
-  } else if (conditionDay === 'day' && condition === 176 || condition >= 293 || condition <= 302 || condition === 311 || condition === 353 || condition === 185 || condition >= 263 || condition <= 284 || condition === 317 || condition === 320) {
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/mist.jpg';
+    } else {
+      wrapper.style.background = 'url(./images/night/mist.jpg';
+    }
+  } else if (condition == 176 || condition >= 293 && condition <= 302 || condition == 311 || condition == 353 || condition == 185 || condition >= 263 && condition <= 284 || condition == 317 || condition == 320) {
     // background image light/medium rain
-  } else if(conditionDay === 'day' && condition >= 305 || condition <= 308 || condition === 314 || condition === 356 || condition === 359 || condition === 182) {
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/rain.jpg';
+    } else {
+      wrapper.style.background = 'url(./images/night/heavy_rain.jpg';
+    }
+  } else if(condition >= 305 && condition <= 308 || condition ===314 || condition == 356 || condition == 359 || condition == 182) {
     // background image heavy rain
-  } else if(conditionDay === 'day' && condition === 386 || condition === 389) {
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/heavy_rain.jpg';
+    } else {
+      wrapper.style.background = 'url(./images/night/heavy_rain.jpg';
+    }
+  } else if(condition == 386 || condition == 389) {
     // background image rain with thunder
-  } else if(conditionDay === 'day' && condition === 200) {
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/light_thunder.jpg)';
+    } else {
+      wrapper.style.background = 'url(./images/night/light_thunder.jpg)';
+    }
+  } else if(condition == 200) {
     // thundery outbreak image
-  } else if(conditionDay === 'day' && condition === 179 || condition >= 323 || condition <= 329 || condition >= 362 || condition <= 368 || condition === 392) {
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/thundery_outbreak.jpg';
+    } else {
+      wrapper.style.background = 'url(./images/night/thundery_outbreak.jpg';
+    }
+  } else if(condition == 179 || condition >= 323 && condition <= 329 || condition >= 362 && condition <= 368 || condition == 392) {
     // light snow
-  } else if(conditionDay === 'day' && condition === 227 || condition === 230 || condition >= 332 || condition <= 338 || condition === 371 || condition === 395) {
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/light_snow.jpg';
+    } else {
+      wrapper.style.background = 'url(./images/night/light_snow.jpg';
+    }
+  } else if(condition == 227 || condition == 230 || condition >= 332 && condition <= 338 || condition == 371 || condition == 395) {
     // heavy snow
-  } else if(conditionDay === 'day' && condition === 248 || condition === 260) {
-    // fog
-  } else if(conditionDay === 'day' && condition === 350 || condition === 374 || condition === 377) {
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/heavy_snow.jpg';
+    } else {
+      wrapper.style.background = 'url(./images/night/heavy_snow.jpg';
+    }
+  } else if(condition == 350 || condition == 374 || condition == 377) {
     // ice palletes
+    if(conditionDay === 'day') {
+      wrapper.style.background = 'url(./images/day/ice_pellete.jpg';
+    } else {
+      wrapper.style.background = 'url(./images/night/ice_pellete.jpg';
+    }
   }
-
-  wrapper.style.backgroundPosition = 'center';
-  wrapper.style.backgroundRepeat = 'no-repeat';
-  wrapper.style.backgroundSize = 'cover';
 }
