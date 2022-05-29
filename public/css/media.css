@@ -9,7 +9,6 @@
 
   .wrapper {
     position: relative;
-    max-height: 500px;
     padding: 1rem;
     border-radius: 1rem;
     box-shadow: 5px 5px 15px 4px rgba(0, 0, 0, 0.14);
@@ -34,17 +33,35 @@
     width: 48%;
   }
 
+  
   .box {
     width: 50%;
   }
   
-  #map { 
-    height: 240px;
-    border-radius: .5rem;
-   }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 24%;
+    gap: .5rem;
+  }
 
   .map__wrapper {
-    width: 75%;
+    width: 100%;
+  }
+  
+  #map { 
+    height: 220px;
+    border-radius: .5rem;
+  }
+
+  .rain-visibility {
+    flex-direction: column;
+    width: 100%;
+    /* justify-content: space-around; */
+  }
+  
+  .rain,
+  .visibility {
+    width: 100%;
   }
 
 }

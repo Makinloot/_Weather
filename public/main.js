@@ -41,11 +41,14 @@ async function fetchApi() {
   const res = await fetch("/api", options);
   const data = await res.json();
   console.log(data);
+
   headerData(data);
   hourlyData(data);
   forecastData(data);
   fetchAstro(data);
   displayMap(MAP_KEY, lat, lon);
+  progressBar(data);
+  rainData(data);
 }
 
 // displays data from api for header
@@ -124,6 +127,28 @@ function fetchAstro(data) {
   ).textContent = `${data.current.wind_kph}`;
 }
 
+// creates progress bar for sunrise and sunset
+function progressBar(data) {
+  const barWrapper = document.getElementById('progress-bar-wrapper');
+  const progressBar = document.getElementById('progress-bar');
+  const barIcon = document.getElementById('progress-bar-img');
+
+  let time = new Date().getHours();
+  let isDay = data.current.isDay;
+
+  // display progress bar icon according to time
+  if(isDay === 1) {
+    barIcon.setAttribute('src', '../images/sun.png');
+    barIcon.setAttribute('alt', 'sun icon');
+  } else {
+    barIcon.setAttribute('src', '../images/moon.png');
+    barIcon.setAttribute('alt', 'moong icon');
+  }
+
+  // move progress bar according to time
+  progressBar.style.left = time * 4.1 + '%';
+}
+
 // pulls data from api for 3 day forecast
 function forecastData(data) {
   const forecastWrapper = document.getElementById("forecast-wrapper");
@@ -173,4 +198,16 @@ function displayMap(key, lat, lon) {
   //   fillOpacity: 0.5,
   //   radius: 500
   // }).addTo(map);
+}
+
+// display rain and visibility data on page
+function rainData(data) {
+  const rainText = document.getElementById('chance-of-rain');
+  const snowText = document.getElementById('chance-of-snow');
+
+  let chanceOfRain = data.forecast.forecastday[0].day.daily_chance_of_rain;
+  let chanceOfSnow = data.forecast.forecastday[0].day.daily_chance_of_snow;
+
+  rainText.textContent = `${chanceOfRain}%`
+  snowText.textContent = `: ${chanceOfSnow}%`
 }
