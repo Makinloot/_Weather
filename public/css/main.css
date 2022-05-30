@@ -211,7 +211,8 @@ body {
 .feelslike__details,
 .wind-speed,
 .rain__div,
-.visibility__div {
+.visibility__div,
+.air-quality {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
@@ -222,9 +223,16 @@ body {
   text-transform: uppercase;
 }
 
+.visibility__div img {
+  width: 16px;
+  height: 16px;
+  object-fit: cover;
+}
+
 .sunrise__past div,
 .wind-speed,
-.snow {
+.snow,
+.air-quality {
   top: 6rem;
   left: 0.5rem;
   opacity: 1;

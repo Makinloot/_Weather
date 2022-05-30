@@ -14,7 +14,7 @@ app.post("/api", async (request, response) => {
   const data = request.body;
   const lat = data.latitude;
   const lon = data.longitude;
-  const weather_url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=10`;
+  const weather_url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=10&aqi=yes`;
   const weather_res = await fetch(weather_url);
   const weather_data = await weather_res.json();
 

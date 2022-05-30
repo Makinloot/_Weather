@@ -193,26 +193,38 @@ function rainData(data) {
   const rainText = document.getElementById('chance-of-rain');
   const snowText = document.getElementById('chance-of-snow');
   const visibilityText = document.getElementById('visibility');
+  const airQuality = document.getElementById('air-quality');
 
   let chanceOfRain = data.forecast.forecastday[0].day.daily_chance_of_rain;
   let chanceOfSnow = data.forecast.forecastday[0].day.daily_chance_of_snow;
   let visibilityKm = data.current.vis_km;
+  let airQualityIndex = data.current.air_quality['us-epa-index'];
+
+  console.log(airQualityIndex);
+
+  if(airQualityIndex == '1') airQuality.textContent = 'Good';
+  else if(airQualityIndex == '2') airQuality.textContent = 'Moderate';
+  else if(airQualityIndex >= '3' && airQualityIndex <= '4') airQuality.textContent = 'Unhealthy';
+  else if(airQualityIndex == '5') airQuality.textContent = 'Too unhealthy';
+  else if(airQualityIndex == '6') airQuality.textContent = 'Hazardous';
 
   rainText.textContent = `${chanceOfRain}%`
   snowText.textContent = `: ${chanceOfSnow}%`
   visibilityText.textContent = `${visibilityKm} km`
+
 }
 
 // change background image of wrapper according to weather condition
 function changeBackground(data) {
   const wrapper = document.getElementById('wrapper');
-  let conditionDay = data.current.condition.icon.split('/')[5];
+  // let conditionDay = data.current.condition.icon.split('/')[5];
+  let conditionDay = 'night';
   let condition = data.current.condition.icon.split('/')[6].split('.')[0];
 
   // check weather condition and whether it is day or night, then display background image
   if(condition == 113) {
     // background image sunny
-    if(conditionDay === 'day') {
+    if(cdayonditionDay === 'day') {
       wrapper.style.background = 'url(./images/day/sunny.jpg)';
     } else {
       wrapper.style.background = 'url(./images/night/clear.jpg)';
@@ -281,4 +293,9 @@ function changeBackground(data) {
       wrapper.style.background = 'url(./images/night/ice_pellete.jpg';
     }
   }
+
+  wrapper.style.backgroundPosition = 'center';
+  wrapper.style.backgroundRepeat = 'no-repeat';
+  wrapper.style.backgroundSize = 'cover';
+
 }
