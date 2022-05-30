@@ -209,7 +209,7 @@ function changeBackground(data) {
   // check weather condition and whether it is day or night, then display background image
   if(condition == 113) {
     // background image sunny
-    if(cdayonditionDay === 'day') wrapper.style.background = 'url(./images/day/sunny.jpg)';
+    if(conditionDay === 'day') wrapper.style.background = 'url(./images/day/sunny.jpg)';
     else wrapper.style.background = 'url(./images/night/clear.jpg)';
   } else if (condition >= 116 && condition <= 122) {
     // CLOUDY CONDITIONS
