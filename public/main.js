@@ -156,7 +156,7 @@ function forecastData(data) {
 }
 // Creates and displays map on page with swiper.js library
 function displayMap(key, lat, lon) {
-  let map = L.map("map").setView([lat, lon], 11); // create map
+  let map = L.map("map").setView([lat, lon], 12); // create map
   // map terrain
   let Jawg_Terrain = L.tileLayer(
     "https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}",
