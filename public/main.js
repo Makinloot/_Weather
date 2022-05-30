@@ -46,7 +46,6 @@ async function fetchApi() {
   forecastData(data);
   fetchAstro(data);
   displayMap(MAP_KEY, lat, lon);
-  progressBar(data);
   rainData(data);
   changeBackground(data);
 }
@@ -98,10 +97,17 @@ function fetchAstro(data) {
   const pastAstro = document.getElementById("past-astro-text");
   const sunriseText = document.getElementById("sunrise");
   const sunsetText = document.getElementById("sunset");
+  const barIcon = document.getElementById('progress-bar-img');
   const astroPath = data.forecast.forecastday[0].astro;
   const sunrise = astroPath.sunrise;
   const sunset = astroPath.sunset;
   let time = new Date().getHours();
+
+  // create progress bar
+  const progressBar = document.getElementById('progress-bar');
+  
+  // move progress bar according to time
+  progressBar.style.left = time * 4.1 + '%';  
 
   // determines to display SUNRISE or SUNSET first, depending on time of the day.
   if (time >= sunrise.split(":")[0]) {
@@ -110,12 +116,16 @@ function fetchAstro(data) {
     sunriseText.textContent = "SUNSET";
     sunsetText.textContent = "SUNRISE";
     currentAstroIcon.setAttribute("src", "../images/sunrise.png");
+    barIcon.setAttribute('src', '../images/sun.png');
+    barIcon.setAttribute('alt', 'sun icon');
   } else if (time <= sunrise.split(":")[0]) {
     currentAstro.textContent = sunrise;
     pastAstro.textContent = sunset;
     sunriseText.textContent = "SUNRISE";
     sunsetText.textContent = "SUNSET";
     currentAstroIcon.setAttribute("src", "../images/sunrise.png");
+    barIcon.setAttribute('src', '../images/moon.png');
+    barIcon.setAttribute('alt', 'moong icon');
   }
 
   // displays data for 'FEELS LIKE' temperature and wind speed.
@@ -125,28 +135,6 @@ function fetchAstro(data) {
   document.getElementById(
     "wind-speed"
   ).textContent = `${data.current.wind_kph}`;
-}
-
-// creates progress bar for sunrise and sunset
-function progressBar(data) {
-  const barWrapper = document.getElementById('progress-bar-wrapper');
-  const progressBar = document.getElementById('progress-bar');
-  const barIcon = document.getElementById('progress-bar-img');
-
-  let time = new Date().getHours();
-  let isDay = data.current.isDay;
-
-  // display progress bar icon according to time
-  if(isDay === 1) {
-    barIcon.setAttribute('src', '../images/sun.png');
-    barIcon.setAttribute('alt', 'sun icon');
-  } else {
-    barIcon.setAttribute('src', '../images/moon.png');
-    barIcon.setAttribute('alt', 'moong icon');
-  }
-
-  // move progress bar according to time
-  progressBar.style.left = time * 4.1 + '%';
 }
 
 // pulls data from api for 3 day forecast
