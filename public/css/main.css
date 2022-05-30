@@ -3,8 +3,8 @@
 
   --ff-primary: "roboto", sans-serif;
 
-  --bg-transparent: rgba(19, 15, 15, 0.356);
-  --bg-border: 1px solid rgba(138, 138, 138, 0.247);
+  --bg-transparent: rgba(19, 15, 15, 0.5);
+  --bg-border: 1px solid rgba(138, 138, 138, 0.25);
   --round-border: 1rem;
 
   --clr-text: #fff;
