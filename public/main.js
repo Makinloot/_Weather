@@ -177,7 +177,7 @@ function forecastData(data) {
 }
 // Creates and displays map on page with swiper.js library
 function displayMap(key, lat, lon) {
-  let map = L.map("map").setView([lat, lon], 10); // create map
+  let map = L.map("map").setView([lat, lon], 11); // create map
   // map terrain
   let Jawg_Terrain = L.tileLayer(
     "https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}",
@@ -218,7 +218,7 @@ function changeBackground(data) {
   let conditionDay = data.current.condition.icon.split('/')[5];
   let condition = data.current.condition.icon.split('/')[6].split('.')[0];
 
-  console.log(condition);
+  // check weather condition and whether it is day or night, then display background image
   if(condition == 113) {
     // background image sunny
     if(conditionDay === 'day') {

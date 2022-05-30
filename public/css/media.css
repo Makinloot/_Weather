@@ -1,6 +1,5 @@
-@media (min-width: 480px) {
+@media (min-width: 650px) {
   .container {
-    width: min(100%, 662px);
     position: absolute;
     left: 50%;
     top: 50%;
@@ -11,7 +10,7 @@
     position: relative;
     padding: 1rem;
     border-radius: 1rem;
-    box-shadow: 5px 5px 15px 4px rgba(0, 0, 0, 0.14);
+    box-shadow: 5px 5px 15px 4px rgba(0, 0, 0, .5);
     overflow: auto;
   }
 
