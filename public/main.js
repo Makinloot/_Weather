@@ -192,12 +192,15 @@ function displayMap(key, lat, lon) {
 function rainData(data) {
   const rainText = document.getElementById('chance-of-rain');
   const snowText = document.getElementById('chance-of-snow');
+  const visibilityText = document.getElementById('visibility');
 
   let chanceOfRain = data.forecast.forecastday[0].day.daily_chance_of_rain;
   let chanceOfSnow = data.forecast.forecastday[0].day.daily_chance_of_snow;
+  let visibilityKm = data.current.vis_km;
 
   rainText.textContent = `${chanceOfRain}%`
   snowText.textContent = `: ${chanceOfSnow}%`
+  visibilityText.textContent = `${visibilityKm} km`
 }
 
 // change background image of wrapper according to weather condition
@@ -216,7 +219,6 @@ function changeBackground(data) {
     }
   } else if (condition >= 116 && condition <= 122) {
     // CLOUDY CONDITIONS
-    console.log('HEHE')
     if(conditionDay === 'day') {
       wrapper.style.background = 'url(./images/day/cloudy.jpg)';
     } else {
