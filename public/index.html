@@ -40,8 +40,9 @@
         </div>
           <!-- 3 DAY FORECAST SECTION -->
         <div class="forecast flex">
+          <!-- forecast html -->
           <div class="forecast__wrapper flex" id="forecast-wrapper"></div>
-
+          <!-- sunrise-sunset html -->
           <div class="box__wrapper">
             <div class="sunrise box" id="sunrise-wrapper">
               <div class="sunrise__current">
@@ -51,13 +52,13 @@
                   <p id="sunrise"></p>
                 </div>
               </div>
-
+              <!-- progress bar of sunset-sunrise -->
               <div class="progress__bar-wrapper" id="progress-bar-wrapper">
                 <div class="progress__bar" id="progress-bar">
                   <img src="#" alt="sunrise" id="progress-bar-img">
                 </div>
               </div>
-
+              <!-- sunset-sunrise footer -->
               <div class="sunrise__past">
                 <div class="flex">
                   <p id="past-astro-text"></p>
@@ -65,6 +66,7 @@
                 </div>
               </div>
             </div>
+            <!-- feels like data box -->
             <div class="feelslike box" id="feelslike-wrapper">
               <strong id="feels-like-temp"></strong>
               <div class="feelslike__details flex">
@@ -75,6 +77,7 @@
                 />
                 <p id="feelslike-temperature">FEELS LIKE</p>
               </div>
+              <!-- wind k/ph box -->
               <div class="wind-speed">
                   <p>Wind <span  id="wind-speed"></span> k/ph</p>
               </div>
@@ -86,6 +89,7 @@
           <div class="map__wrapper">
             <div id="map"></div>
           </div>
+          <!-- chance of rain box -->
           <div class="rain-visibility box__wrapper flex">
             <div class="rain box">
               <strong id="chance-of-rain"></strong>
@@ -93,17 +97,20 @@
                 <img src="./images/rain.png" alt="rain icon">
                 <p>chance of rain</p>
               </div>
+              <!-- chance of snow box -->
               <div class="snow flex">
                 <p>SNOW CHANCE</p>
                 <p id="chance-of-snow"></p>
               </div>
             </div>
+            <!-- visibility box -->
             <div class="visibility box">
               <strong id="visibility"></strong>
               <div class="visibility__div flex">
                 <img src="./images/visibility.png" alt="visibility icon">
                 <p>visibility</p>
               </div>
+              <!-- air quality html -->
               <div class="air-quality">
                 <p>air: <span id="air-quality"></span></p>
               </div>

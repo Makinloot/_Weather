@@ -203,8 +203,7 @@ function rainData(data) {
 // change background image of wrapper according to weather condition
 function changeBackground(data) {
   const wrapper = document.getElementById('wrapper');
-  // let conditionDay = data.current.condition.icon.split('/')[5];
-  let conditionDay = 'night';
+  let conditionDay = data.current.condition.icon.split('/')[5];
   let condition = data.current.condition.icon.split('/')[6].split('.')[0];
   // check weather condition and whether it is day or night, then display background image
   if(condition == 113) {
