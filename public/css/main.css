@@ -2,25 +2,24 @@
   --avarage-height: 120px;
 
   --ff-primary: "roboto", sans-serif;
+  --fs-small: 80%;
 
   --bg-transparent: rgba(19, 15, 15, 0.5);
   --bg-border: 1px solid rgba(138, 138, 138, 0.25);
   --round-border: 1rem;
 
   --clr-text: #fff;
-
-  --margin-medium: 2rem 0;
-  --margin-regular: 0.5rem 0;
 }
 
 body {
   position: relative;
   min-height: 100vh;
-  background-image: linear-gradient(
-    90deg,
-    rgb(184, 247, 252),
-    rgb(238, 170, 255)
-  );
+}
+
+.bg-main {
+  position: absolute;
+  min-height: 100vh;
+  width: 100%;
 }
 
 * {
@@ -45,9 +44,6 @@ body {
 
 .wrapper {
   padding: 1rem;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 /* HEADER INFO */
@@ -78,7 +74,7 @@ body {
 .min-max__wrapper {
   flex-direction: row;
   gap: 0.5rem;
-  font-size: 80%;
+  font-size: var(--fs-small);
   font-weight: 600;
 }
 
@@ -155,10 +151,6 @@ body {
   grid-template-columns: 1fr 1fr;
 }
 
-/* .row__day {
-
-} */
-
 .min-max__row {
   position: relative;
   flex-direction: row;
@@ -218,7 +210,7 @@ body {
   left: 0.5rem;
   flex-direction: row;
   gap: 0.3rem;
-  font-size: 80%;
+  font-size: var(--fs-small);
   opacity: 0.5;
   text-transform: uppercase;
 }
@@ -279,10 +271,6 @@ body {
   border-radius: .5rem;
  }
 
- /* .leaflet-control-container {
-   display: none;
- } */
-
  .leaflet-top,
  .leaflet-bottom {
    display: none;
@@ -295,5 +283,5 @@ body {
  .snow {
    position: absolute;
    flex-direction: row;
-   font-size: 80%;
+   font-size: var(--fs-small);
  }
