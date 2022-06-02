@@ -172,12 +172,12 @@ function displayMap(key, lat, lon) {
   ).addTo(map);
   // adds marker on map
   // // map marker
-  // let marker = L.marker([lat, lon], {
-  //   color: 'red',
-  //   fillColor: '#f03',
-  //   fillOpacity: 0.5,
-  //   radius: 500
-  // }).addTo(map);
+  let marker = L.marker([lat, lon], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+  }).addTo(map);
 }
 // display rain and visibility data on page
 function rainData(data) {
