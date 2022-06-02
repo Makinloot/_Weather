@@ -1,7 +1,7 @@
 // import jeaflet.js to main.js
 import "./lib/leaflet.js";
 
-navigator.geolocation.getCurrentPosition(async position => {
+navigator.geolocation.getCurrentPosition(async (position) => {
   // send user latitude and longitude to server
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
@@ -14,7 +14,7 @@ navigator.geolocation.getCurrentPosition(async position => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(locationData),
+    body: JSON.stringify(locationData)
   };
   // fetching data of weather API from server
   const res = await fetch("/api", options);
@@ -173,10 +173,10 @@ function displayMap(key, lat, lon) {
   // adds marker on map
   // // map marker
   let marker = L.marker([lat, lon], {
-    color: 'red',
-    fillColor: '#f03',
+    color: "red",
+    fillColor: "#f03",
     fillOpacity: 0.5,
-    radius: 500
+    radius: 500,
   }).addTo(map);
 }
 // display rain and visibility data on page

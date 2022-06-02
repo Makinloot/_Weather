@@ -7,7 +7,7 @@
   --bg-transparent: rgba(19, 15, 15, 0.5);
   --round-border: 1rem;
 
-  --box-shadow: 5px 5px 15px 4px rgba(0, 0, 0, .5);
+  --box-shadow: 5px 5px 15px 4px rgba(0, 0, 0, 0.5);
 
   --clr-text: #fff;
 }
@@ -71,7 +71,7 @@ body {
   font-size: 3rem;
   position: absolute;
   right: -0.8rem;
-  top: -.3rem;
+  top: -0.3rem;
 }
 
 .min-max__wrapper {
@@ -84,7 +84,7 @@ body {
 /* SLIDER STYLES */
 
 .swiper {
-  padding: .5rem 0;
+  padding: 0.5rem 0;
   width: 100%;
   border-radius: var(--round-border);
   background-color: var(--bg-transparent);
@@ -262,34 +262,28 @@ body {
 
 .map__wrapper {
   position: relative;
-  margin: .5rem 0;
-  padding: .8rem;
+  margin: 0.5rem 0;
+  padding: 0.8rem;
   border-radius: var(--round-border);
   background-color: var(--bg-transparent);
 }
 
-#map { 
+#map {
   height: 200px;
-  border-radius: .5rem;
-  opacity: .4;
-  z-index: 1;
- }
+  border-radius: 0.5rem;
+}
 
- #map:focus {
-   opacity: 1;
- }
+.leaflet-top,
+.leaflet-bottom {
+  display: none;
+}
 
- .leaflet-top,
- .leaflet-bottom {
-   display: none;
- }
+.rain-visibility {
+  flex-direction: row;
+}
 
- .rain-visibility {
-   flex-direction: row;
- }
-
- .snow {
-   position: absolute;
-   flex-direction: row;
-   font-size: var(--fs-small);
- }
+.snow {
+  position: absolute;
+  flex-direction: row;
+  font-size: var(--fs-small);
+}
