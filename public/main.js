@@ -1,7 +1,7 @@
 // import jeaflet.js to main.js
 import "./lib/leaflet.js";
 
-navigator.geolocation.getCurrentPosition(async (position) => {
+navigator.geolocation.getCurrentPosition(async position => {
   // send user latitude and longitude to server
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
@@ -40,7 +40,7 @@ navigator.geolocation.getCurrentPosition(async (position) => {
   // fetching data MAP key
   const token_res = await fetch("./token", token_options);
   const token_data = await token_res.json();
-  const MAP_KEY = token_data.map_token;
+  const MAP_KEY = token_data;
   displayMap(MAP_KEY, lat, lon);
 });
 // displays data from api for header
