@@ -5,8 +5,9 @@
   --fs-small: 80%;
 
   --bg-transparent: rgba(19, 15, 15, 0.5);
-  --bg-border: 1px solid rgba(138, 138, 138, 0.25);
   --round-border: 1rem;
+
+  --box-shadow: 5px 5px 15px 4px rgba(0, 0, 0, .5);
 
   --clr-text: #fff;
 }
@@ -44,6 +45,8 @@ body {
 
 .wrapper {
   padding: 1rem;
+  border: 1px solid rgba(73, 73, 73, 0.15);
+  box-shadow: var(--box-shadow);
 }
 
 /* HEADER INFO */
@@ -85,7 +88,6 @@ body {
   width: 100%;
   border-radius: var(--round-border);
   background-color: var(--bg-transparent);
-  border: var(--bg-border);
 }
 
 .swiper:hover {
@@ -140,7 +142,6 @@ body {
   min-height: var(--avarage-height);
   width: 100%;
   background-color: var(--bg-transparent);
-  border: var(--bg-border);
   border-radius: var(--round-border);
 }
 
@@ -178,6 +179,8 @@ body {
   display: flex;
   width: 100%;
   gap: 0.5rem;
+  pointer-events: none;
+  user-select: none;
 }
 
 .box {
@@ -186,7 +189,6 @@ body {
   width: 50%;
   border-radius: var(--round-border);
   background-color: var(--bg-transparent);
-  border: var(--bg-border);
 }
 
 #current-astro-text,
@@ -259,16 +261,22 @@ body {
 }
 
 .map__wrapper {
+  position: relative;
   margin: .5rem 0;
   padding: .8rem;
   border-radius: var(--round-border);
   background-color: var(--bg-transparent);
-  border: var(--bg-border);
 }
 
 #map { 
   height: 200px;
   border-radius: .5rem;
+  opacity: .4;
+  z-index: 1;
+ }
+
+ #map:focus {
+   opacity: 1;
  }
 
  .leaflet-top,
