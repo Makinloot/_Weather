@@ -43,6 +43,7 @@ navigator.geolocation.getCurrentPosition(async (position) => {
   const MAP_KEY = token_data;
   displayMap(MAP_KEY, lat, lon);
 });
+
 // displays data from api for header
 function headerData(data) {
   // header data path
@@ -60,6 +61,7 @@ function headerData(data) {
   document.getElementById("header-highest").textContent = maxTemp;
   document.getElementById("header-lowest").textContent = minTemp;
 }
+
 // pulls data from api and displays it in slider
 function hourlyData(data) {
   const path = data.forecast.forecastday[0].hour;
@@ -81,6 +83,7 @@ function hourlyData(data) {
     slider.append(root);
   });
 }
+
 // displays astro data from API
 function fetchAstro(data) {
   // astro HTML elements & path
@@ -127,6 +130,7 @@ function fetchAstro(data) {
     "wind-speed"
   ).textContent = `${data.current.wind_kph}`;
 }
+
 // pulls data from api for 3 day forecast
 function forecastData(data) {
   const forecastWrapper = document.getElementById("forecast-wrapper");
@@ -148,12 +152,13 @@ function forecastData(data) {
             <img class='row__icon' src=${iconPath} alt='condition img'>
             <div class='min-max__row flex'>
                 <p class='row__max-temp'><span>H:</span>${maxPath}°</p>
-                <p class='row__min-temp'><span>H:</span>${minPath}°</p>
+                <p class='row__min-temp'><span>L:</span>${minPath}°</p>
             </div>
         `;
     forecastWrapper.append(root);
   }
 }
+
 // Creates and displays map on page with swiper.js library
 function displayMap(key, lat, lon) {
   let map = L.map("map").setView([lat, lon], 12); // create map
@@ -178,7 +183,9 @@ function displayMap(key, lat, lon) {
     fillOpacity: 0.5,
     radius: 500,
   }).addTo(map);
+  // console.log(marker)
 }
+
 // display rain and visibility data on page
 function rainData(data) {
   const rainText = document.getElementById("chance-of-rain");
@@ -202,6 +209,7 @@ function rainData(data) {
   snowText.textContent = `: ${chanceOfSnow}%`;
   visibilityText.textContent = `${visibilityKm} km`;
 }
+
 // change background image of wrapper according to weather condition
 function changeBackground(data) {
   const body = document.querySelector(".bg-main");
@@ -226,27 +234,24 @@ function changeBackground(data) {
     // background image light/medium rain
   } else if (
     condition == 176 ||
-    (condition >= 293 && condition <= 302) ||
+    condition == 185 ||
     condition == 311 ||
     condition == 353 ||
-    condition == 185 ||
     (condition >= 263 && condition <= 284) ||
-    condition == 317 ||
-    condition == 320
+    (condition >= 293 && condition <= 302) ||
+    (condition >= 317 && condition <= 320)
   ) {
     if (conditionDay === "day")
       body.style.background = "url(./images/day/light_rain.jpg";
     else body.style.background = "url(./images/night/light_rain.jpg";
     // background image heavy rain
   } else if (
-    (condition >= 305 && condition <= 308) ||
-    condition === 314 ||
-    condition == 356 ||
-    condition == 359 ||
     condition == 182 ||
+    condition === 314 ||
     condition == 350 ||
-    condition == 374 ||
-    condition == 377
+    (condition >= 305 && condition <= 308) ||
+    (condition >= 356 && condition <= 359) ||
+    (condition >= 374 && condition <= 377)
   ) {
     if (conditionDay === "day")
       body.style.background = "url(./images/day/heavy_rain.jpg";
@@ -273,8 +278,7 @@ function changeBackground(data) {
     else body.style.background = "url(./images/night/light_snow.jpg";
     // heavy snow
   } else if (
-    condition == 227 ||
-    condition == 230 ||
+    (condition >= 227 && condition <= 330) ||
     (condition >= 332 && condition <= 338) ||
     condition == 371 ||
     condition == 395
