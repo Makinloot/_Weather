@@ -8,23 +8,26 @@ app.use(express.json({ limit: "1mb" }));
 require("dotenv").config();
 // sending weather data to user
 app.post("/api", async (request, response) => {
-  const API_KEY = process.env.API_KEY;
+  // recieve info from user
   const data = request.body;
-  const lat = data.latitude;
-  const lon = data.longitude;
-  const weather_url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=10&aqi=yes`;
+  let lat = data.latitude;
+  let lon = data.longitude;
+  // get user location
+  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&accept-language=en`
+  const res = await fetch(url);
+  const street_data = await res.json();
+  let city = street_data.address.city;
+  // call weather data based on user location
+  const API_KEY = process.env.API_KEY;
+  const weather_url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=10&aqi=yes`;
   const weather_res = await fetch(weather_url);
   const weather_data = await weather_res.json();
-
+  // send user weather data
   response.json(weather_data);
 });
-// sending api and map keys
+// sending map key
 app.post("/token", async (request, response) => {
   const mapKey = process.env.MAP_TOKEN;
-  const IP_KEY = process.env.IP_KEY;
-  const tokens = {
-    map_token: mapKey,
-    ip_token: IP_KEY
-  }
-  response.json(tokens);
+  const token = mapKey;
+  response.json(token);
 });

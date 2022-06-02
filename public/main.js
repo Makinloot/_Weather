@@ -1,31 +1,10 @@
 // import jeaflet.js to main.js
 import "./lib/leaflet.js";
-// call weather
-fetchApi();
-async function fetchApi() {
-  // Making request for API key and MAP key
-  const tokens = {
-    request: 'Send tokens'
-  }
-  const token_options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(tokens)
-  }
-  // fetching data for IP and MAP keys
-  const token_res = await fetch('./token', token_options);
-  const token_data = await token_res.json();
-  const IP_KEY = token_data.ip_token;
-  const MAP_KEY = token_data.map_token;
-  // fetching data for IP API
-  const ip_res = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${IP_KEY}`);
-  const ip_data = await ip_res.json();
-  const lat = ip_data.latitude;
-  const lon = ip_data.longitude;
-  console.log(ip_data)
-  // sending data (latitude, longitude) to server to make API call with users lat, lon.
+
+navigator.geolocation.getCurrentPosition(async (position) => {
+  // send user latitude and longitude to server
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
   const locationData = {
     latitude: lat,
     longitude: lon,
@@ -41,15 +20,29 @@ async function fetchApi() {
   const res = await fetch("/api", options);
   const data = await res.json();
   console.log(data);
-  // call weather functions
   headerData(data);
   hourlyData(data);
   forecastData(data);
   fetchAstro(data);
-  displayMap(MAP_KEY, lat, lon);
   rainData(data);
   changeBackground(data);
-}
+  // Making request for API key and MAP key
+  const tokens = {
+    request: "Send tokens",
+  };
+  const token_options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tokens),
+  };
+  // fetching data MAP key
+  const token_res = await fetch("./token", token_options);
+  const token_data = await token_res.json();
+  const MAP_KEY = token_data.map_token;
+  displayMap(MAP_KEY, lat, lon);
+});
 // displays data from api for header
 function headerData(data) {
   // header data path
@@ -96,7 +89,7 @@ function fetchAstro(data) {
   const pastAstro = document.getElementById("past-astro-text");
   const sunriseText = document.getElementById("sunrise");
   const sunsetText = document.getElementById("sunset");
-  const barIcon = document.getElementById('progress-bar-img');
+  const barIcon = document.getElementById("progress-bar-img");
   let isDay = data.current.is_day;
   let astroPath = data.forecast.forecastday[0].astro;
   let sunrise = astroPath.sunrise;
@@ -104,8 +97,8 @@ function fetchAstro(data) {
   let time = new Date().getHours();
 
   // move progress bar according to time
-  const progressBar = document.getElementById('progress-bar');
-  progressBar.style.left = time * 4.1 + '%';  
+  const progressBar = document.getElementById("progress-bar");
+  progressBar.style.left = time * 4.1 + "%";
   // determines to display SUNRISE or SUNSET first, depending on time of the day.
   if (isDay === 1) {
     // if day
@@ -114,8 +107,8 @@ function fetchAstro(data) {
     sunriseText.textContent = "SUNSET";
     sunsetText.textContent = "SUNRISE";
     currentAstroIcon.setAttribute("src", "../images/sunrise.png");
-    barIcon.setAttribute('src', '../images/sun.png');
-    barIcon.setAttribute('alt', 'sun icon');
+    barIcon.setAttribute("src", "../images/sun.png");
+    barIcon.setAttribute("alt", "sun icon");
   } else {
     // if night
     currentAstro.textContent = sunrise;
@@ -123,12 +116,16 @@ function fetchAstro(data) {
     sunriseText.textContent = "SUNRISE";
     sunsetText.textContent = "SUNSET";
     currentAstroIcon.setAttribute("src", "../images/sunrise.png");
-    barIcon.setAttribute('src', '../images/moon.png');
-    barIcon.setAttribute('alt', 'moong icon');
+    barIcon.setAttribute("src", "../images/moon.png");
+    barIcon.setAttribute("alt", "moong icon");
   }
   // displays data for 'FEELS LIKE' temperature and wind speed.
-  document.getElementById("feels-like-temp").textContent = `${data.current.feelslike_c}°`;
-  document.getElementById("wind-speed").textContent = `${data.current.wind_kph}`;
+  document.getElementById(
+    "feels-like-temp"
+  ).textContent = `${data.current.feelslike_c}°`;
+  document.getElementById(
+    "wind-speed"
+  ).textContent = `${data.current.wind_kph}`;
 }
 // pulls data from api for 3 day forecast
 function forecastData(data) {
@@ -164,12 +161,13 @@ function displayMap(key, lat, lon) {
   let Jawg_Terrain = L.tileLayer(
     "https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}",
     {
-      attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution:
+        '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       minZoom: 0,
       maxZoom: 22,
       subdomains: "abcd",
       accessToken: key, // MAP KEY HERE
-      zoomControl: false
+      zoomControl: false,
     }
   ).addTo(map);
   // adds marker on map
@@ -183,71 +181,110 @@ function displayMap(key, lat, lon) {
 }
 // display rain and visibility data on page
 function rainData(data) {
-  const rainText = document.getElementById('chance-of-rain');
-  const snowText = document.getElementById('chance-of-snow');
-  const visibilityText = document.getElementById('visibility');
-  const airQuality = document.getElementById('air-quality');
+  const rainText = document.getElementById("chance-of-rain");
+  const snowText = document.getElementById("chance-of-snow");
+  const visibilityText = document.getElementById("visibility");
+  const airQuality = document.getElementById("air-quality");
   // path for data
   let chanceOfRain = data.forecast.forecastday[0].day.daily_chance_of_rain;
   let chanceOfSnow = data.forecast.forecastday[0].day.daily_chance_of_snow;
   let visibilityKm = data.current.vis_km;
-  let airQualityIndex = data.current.air_quality['us-epa-index'];
+  let airQualityIndex = data.current.air_quality["us-epa-index"];
   // air quality text according to its quality
-  if(airQualityIndex == '1') airQuality.textContent = 'Good';
-  else if(airQualityIndex == '2') airQuality.textContent = 'Moderate';
-  else if(airQualityIndex >= '3' && airQualityIndex <= '4') airQuality.textContent = 'Unhealthy';
-  else if(airQualityIndex == '5') airQuality.textContent = 'Too unhealthy';
-  else if(airQualityIndex == '6') airQuality.textContent = 'Hazardous';
+  if (airQualityIndex == "1") airQuality.textContent = "Good";
+  else if (airQualityIndex == "2") airQuality.textContent = "Moderate";
+  else if (airQualityIndex >= "3" && airQualityIndex <= "4")
+    airQuality.textContent = "Unhealthy";
+  else if (airQualityIndex == "5") airQuality.textContent = "Too unhealthy";
+  else if (airQualityIndex == "6") airQuality.textContent = "Hazardous";
   // insert data in HTML
-  rainText.textContent = `${chanceOfRain}%`
-  snowText.textContent = `: ${chanceOfSnow}%`
-  visibilityText.textContent = `${visibilityKm} km`
+  rainText.textContent = `${chanceOfRain}%`;
+  snowText.textContent = `: ${chanceOfSnow}%`;
+  visibilityText.textContent = `${visibilityKm} km`;
 }
 // change background image of wrapper according to weather condition
 function changeBackground(data) {
-  const body = document.querySelector('.bg-main');
-  let conditionDay = data.current.condition.icon.split('/')[5];
-  let condition = data.current.condition.icon.split('/')[6].split('.')[0];
+  const body = document.querySelector(".bg-main");
+  let conditionDay = data.current.condition.icon.split("/")[5];
+  let condition = data.current.condition.icon.split("/")[6].split(".")[0];
   // check weather condition and whether it is day or night, then display background image
   // background image sunny
-  if(condition == 113) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/sunny.jpg)';
-    else body.style.background = 'url(./images/night/clear.jpg)';
+  if (condition == 113) {
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/sunny.jpg)";
+    else body.style.background = "url(./images/night/clear.jpg)";
     // CLOUDY CONDITIONS
   } else if (condition >= 116 && condition <= 122) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/cloudy.jpg)';
-    else body.style.background = 'url(./images/night/cloudy.jpg)'
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/cloudy.jpg)";
+    else body.style.background = "url(./images/night/cloudy.jpg)";
     // background image mist
   } else if (condition == 143 || condition == 248 || condition == 260) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/mist.jpg';
-    else body.style.background = 'url(./images/night/mist.jpg';
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/mist.jpg";
+    else body.style.background = "url(./images/night/mist.jpg";
     // background image light/medium rain
-  } else if (condition == 176 || condition >= 293 && condition <= 302 || condition == 311 || condition == 353 || condition == 185 || condition >= 263 && condition <= 284 || condition == 317 || condition == 320) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/light_rain.jpg';
-    else body.style.background = 'url(./images/night/light_rain.jpg';
+  } else if (
+    condition == 176 ||
+    (condition >= 293 && condition <= 302) ||
+    condition == 311 ||
+    condition == 353 ||
+    condition == 185 ||
+    (condition >= 263 && condition <= 284) ||
+    condition == 317 ||
+    condition == 320
+  ) {
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/light_rain.jpg";
+    else body.style.background = "url(./images/night/light_rain.jpg";
     // background image heavy rain
-  } else if(condition >= 305 && condition <= 308 || condition ===314 || condition == 356 || condition == 359 || condition == 182 || condition == 350 || condition == 374 || condition == 377) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/heavy_rain.jpg';
-    else body.style.background = 'url(./images/night/heavy_rain.jpg';
+  } else if (
+    (condition >= 305 && condition <= 308) ||
+    condition === 314 ||
+    condition == 356 ||
+    condition == 359 ||
+    condition == 182 ||
+    condition == 350 ||
+    condition == 374 ||
+    condition == 377
+  ) {
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/heavy_rain.jpg";
+    else body.style.background = "url(./images/night/heavy_rain.jpg";
     // background image rain with thunder
-  } else if(condition == 386 || condition == 389) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/light_thunder.jpg)';
-    else body.style.background = 'url(./images/night/light_thunder.jpg)';
+  } else if (condition == 386 || condition == 389) {
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/light_thunder.jpg)";
+    else body.style.background = "url(./images/night/light_thunder.jpg)";
     // thundery outbreak image
-  } else if(condition == 200) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/thundery_outbreak.jpg';
-    else body.style.background = 'url(./images/night/thundery_outbreak.jpg';
+  } else if (condition == 200) {
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/thundery_outbreak.jpg";
+    else body.style.background = "url(./images/night/thundery_outbreak.jpg";
     // light snow
-  } else if(condition == 179 || condition >= 323 && condition <= 329 || condition >= 362 && condition <= 368 || condition == 392) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/light_snow.jpg';
-    else body.style.background = 'url(./images/night/light_snow.jpg';
+  } else if (
+    condition == 179 ||
+    (condition >= 323 && condition <= 329) ||
+    (condition >= 362 && condition <= 368) ||
+    condition == 392
+  ) {
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/light_snow.jpg";
+    else body.style.background = "url(./images/night/light_snow.jpg";
     // heavy snow
-  } else if(condition == 227 || condition == 230 || condition >= 332 && condition <= 338 || condition == 371 || condition == 395) {
-    if(conditionDay === 'day') body.style.background = 'url(./images/day/heavy_snow.jpg';
-    else body.style.background = 'url(./images/night/heavy_snow.jpg';
+  } else if (
+    condition == 227 ||
+    condition == 230 ||
+    (condition >= 332 && condition <= 338) ||
+    condition == 371 ||
+    condition == 395
+  ) {
+    if (conditionDay === "day")
+      body.style.background = "url(./images/day/heavy_snow.jpg";
+    else body.style.background = "url(./images/night/heavy_snow.jpg";
   }
   // center background image
-  body.style.backgroundPosition = 'center';
-  body.style.backgroundRepeat = 'no-repeat';
-  body.style.backgroundSize = 'cover';
+  body.style.backgroundPosition = "center";
+  body.style.backgroundRepeat = "no-repeat";
+  body.style.backgroundSize = "cover";
 }
