@@ -61,7 +61,14 @@ function headerData(data) {
   document.getElementById("header-highest").textContent = maxTemp;
   document.getElementById("header-lowest").textContent = minTemp;
 }
-
+// Makes slider from swiper.js
+let sliderInitialView = new Date().getHours();
+let swiper = new Swiper(".mySwiper", {
+  slidesPerView: 6.5,
+  spaceBetween: 0,
+  freeMode: true,
+  initialSlide: sliderInitialView // measures slider view starting point
+});
 // pulls data from api and displays it in slider
 function hourlyData(data) {
   const path = data.forecast.forecastday[0].hour;
