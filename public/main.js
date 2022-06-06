@@ -47,19 +47,21 @@ navigator.geolocation.getCurrentPosition(async (position) => {
 // displays data from api for header
 function headerData(data) {
   // header data path
-  const location = data.location.name;
-  const temperature = data.current.temp_c;
-  const condition = data.current.condition.text;
-  const maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
-  const minTemp = data.forecast.forecastday[0].day.mintemp_c;
-  const degreeSpan = document.createElement("span");
+  const weatherData = {
+    location: data.location.name,
+    temperature: data.current.temp_c,
+    condition: data.current.condition.text,
+    maxTemp: data.forecast.forecastday[0].day.maxtemp_c,
+    minTemp: data.forecast.forecastday[0].day.mintemp_c,
+  }
   // creates text content for header data
+  const degreeSpan = document.createElement("span");
   degreeSpan.innerText = "°";
-  document.getElementById("header-location").textContent = location;
-  document.getElementById("header-temp").append(temperature, degreeSpan);
-  document.getElementById("header-condition").textContent = condition;
-  document.getElementById("header-highest").textContent = maxTemp;
-  document.getElementById("header-lowest").textContent = minTemp;
+  document.getElementById("header-location").textContent = weatherData.location;
+  document.getElementById("header-temp").append(weatherData.temperature, degreeSpan);
+  document.getElementById("header-condition").textContent = weatherData.condition;
+  document.getElementById("header-highest").textContent = weatherData.maxTemp;
+  document.getElementById("header-lowest").textContent = weatherData.minTemp;
 }
 // Makes slider from swiper.js
 let sliderInitialView = new Date().getHours();
@@ -94,40 +96,43 @@ function hourlyData(data) {
 // displays astro data from API
 function fetchAstro(data) {
   // astro HTML elements & path
-  const currentAstro = document.getElementById("current-astro-text");
-  const currentAstroIcon = document.getElementById("current-astro-icon");
-  const pastAstro = document.getElementById("past-astro-text");
-  const sunriseText = document.getElementById("sunrise");
-  const sunsetText = document.getElementById("sunset");
-  const barIcon = document.getElementById("progress-bar-img");
-  let isDay = data.current.is_day;
+  const astroDOMElements = {
+    currentAstro: document.getElementById('current-astro-text'),
+    currentAstroIcon: document.getElementById('current-astro-icon'),
+    pastAstro: document.getElementById('past-astro-text'),
+    sunriseText: document.getElementById('sunrise'),
+    sunsetText: document.getElementById('sunset'),
+    barIcon: document.getElementById('progress-bar-img')
+  }
   let astroPath = data.forecast.forecastday[0].astro;
-  let sunrise = astroPath.sunrise;
-  let sunset = astroPath.sunset;
-  let time = new Date().getHours();
-
+  const astroData = {
+    isDay: data.current.is_day,
+    sunrise: astroPath.sunrise,
+    sunset: astroPath.sunset
+  }
   // move progress bar according to time
+  let time = new Date().getHours();
   const progressBar = document.getElementById("progress-bar");
   progressBar.style.left = time * 4.1 + "%";
   // determines to display SUNRISE or SUNSET first, depending on time of the day.
-  if (isDay === 1) {
+  if (astroData.isDay === 1) {
     // if day
-    currentAstro.textContent = sunset;
-    pastAstro.textContent = sunrise;
-    sunriseText.textContent = "SUNSET";
-    sunsetText.textContent = "SUNRISE";
-    currentAstroIcon.setAttribute("src", "../images/sunrise.png");
-    barIcon.setAttribute("src", "../images/sun.png");
-    barIcon.setAttribute("alt", "sun icon");
+    astroDOMElements.currentAstro.textContent = astroData.sunset;
+    astroDOMElements.pastAstro.textContent = astroData.sunrise;
+    astroDOMElements.sunriseText.textContent = "SUNSET";
+    astroDOMElements.sunsetText.textContent = "SUNRISE";
+    astroDOMElements.currentAstroIcon.setAttribute("src", "../images/sunrise.png");
+    astroDOMElements.barIcon.setAttribute("src", "../images/sun.png");
+    astroDOMElements.barIcon.setAttribute("alt", "sun icon");
   } else {
     // if night
-    currentAstro.textContent = sunrise;
-    pastAstro.textContent = sunset;
-    sunriseText.textContent = "SUNRISE";
-    sunsetText.textContent = "SUNSET";
-    currentAstroIcon.setAttribute("src", "../images/sunrise.png");
-    barIcon.setAttribute("src", "../images/moon.png");
-    barIcon.setAttribute("alt", "moong icon");
+    astroDOMElements.currentAstro.textContent = astroData.sunrise;
+    astroDOMElements.pastAstro.textContent = astroData.sunset;
+    astroDOMElements.sunriseText.textContent = "SUNRISE";
+    astroDOMElements.sunsetText.textContent = "SUNSET";
+    astroDOMElements.currentAstroIcon.setAttribute("src", "../images/sunrise.png");
+    astroDOMElements.barIcon.setAttribute("src", "../images/moon.png");
+    astroDOMElements.barIcon.setAttribute("alt", "moong icon");
   }
   // displays data for 'FEELS LIKE' temperature and wind speed.
   document.getElementById(
@@ -225,73 +230,39 @@ function changeBackground(data) {
   // check weather condition and whether it is day or night, then display background image
   // background image sunny
   if (condition == 113) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/sunny.jpg)";
+    if (conditionDay === "day") body.style.background = "url(./images/day/sunny.jpg)";
     else body.style.background = "url(./images/night/clear.jpg)";
     // CLOUDY CONDITIONS
   } else if (condition >= 116 && condition <= 122) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/cloudy.jpg)";
+    if (conditionDay === "day") body.style.background = "url(./images/day/cloudy.jpg)";
     else body.style.background = "url(./images/night/cloudy.jpg)";
     // background image mist
   } else if (condition == 143 || condition == 248 || condition == 260) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/mist.jpg";
+    if (conditionDay === "day") body.style.background = "url(./images/day/mist.jpg";
     else body.style.background = "url(./images/night/mist.jpg";
     // background image light/medium rain
-  } else if (
-    condition == 176 ||
-    condition == 185 ||
-    condition == 311 ||
-    condition == 353 ||
-    (condition >= 263 && condition <= 284) ||
-    (condition >= 293 && condition <= 302) ||
-    (condition >= 317 && condition <= 320)
-  ) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/light_rain.jpg";
+  } else if (condition == 176 || condition == 185 || condition == 311 || condition == 353 || (condition >= 263 && condition <= 284) || (condition >= 293 && condition <= 302) || (condition >= 317 && condition <= 320)) {
+    if (conditionDay === "day") body.style.background = "url(./images/day/light_rain.jpg";
     else body.style.background = "url(./images/night/light_rain.jpg";
     // background image heavy rain
-  } else if (
-    condition == 182 ||
-    condition === 314 ||
-    condition == 350 ||
-    (condition >= 305 && condition <= 308) ||
-    (condition >= 356 && condition <= 359) ||
-    (condition >= 374 && condition <= 377)
-  ) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/heavy_rain.jpg";
+  } else if (condition == 182 || condition === 314 || condition == 350 || (condition >= 305 && condition <= 308) || (condition >= 356 && condition <= 359) || (condition >= 374 && condition <= 377)) {
+    if (conditionDay === "day") body.style.background = "url(./images/day/heavy_rain.jpg";
     else body.style.background = "url(./images/night/heavy_rain.jpg";
     // background image rain with thunder
   } else if (condition == 386 || condition == 389) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/light_thunder.jpg)";
+    if (conditionDay === "day")body.style.background = "url(./images/day/light_thunder.jpg)";
     else body.style.background = "url(./images/night/light_thunder.jpg)";
     // thundery outbreak image
   } else if (condition == 200) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/thundery_outbreak.jpg";
+    if (conditionDay === "day") body.style.background = "url(./images/day/thundery_outbreak.jpg";
     else body.style.background = "url(./images/night/thundery_outbreak.jpg";
     // light snow
-  } else if (
-    condition == 179 ||
-    (condition >= 323 && condition <= 329) ||
-    (condition >= 362 && condition <= 368) ||
-    condition == 392
-  ) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/light_snow.jpg";
+  } else if (condition == 179 || (condition >= 323 && condition <= 329) || (condition >= 362 && condition <= 368) || condition == 392) {
+    if (conditionDay === "day") body.style.background = "url(./images/day/light_snow.jpg";
     else body.style.background = "url(./images/night/light_snow.jpg";
     // heavy snow
-  } else if (
-    (condition >= 227 && condition <= 330) ||
-    (condition >= 332 && condition <= 338) ||
-    condition == 371 ||
-    condition == 395
-  ) {
-    if (conditionDay === "day")
-      body.style.background = "url(./images/day/heavy_snow.jpg";
+  } else if ((condition >= 227 && condition <= 330) || (condition >= 332 && condition <= 338) || condition == 371 || condition == 395) {
+    if (conditionDay === "day") body.style.background = "url(./images/day/heavy_snow.jpg";
     else body.style.background = "url(./images/night/heavy_snow.jpg";
   }
   // center background image
